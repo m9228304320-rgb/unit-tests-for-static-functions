@@ -1,3 +1,11 @@
+/**
+ * @file otherfile.c
+ * 
+ * Test helper/double functions that intentionally fail if called.
+ * These functions simulate external dependencies and should always be mocked
+ * in unit tests. If they execute, it indicates a mocking failure.
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -12,8 +20,10 @@
  * Si se ejecuta, indica un error en el flujo de control.
  */
 void function_somewhere_else(int argument) {
-    fprintf(stderr, "ERROR: %s() was unexpectedly called with argument: %d\n", 
-            __func__, argument);
+    fprintf(stderr, 
+            "ERROR: %s() at %s:%d unexpectedly called with argument: %d\n"
+            "       This function must be mocked in unit tests.\n", 
+            __func__, __FILE__, __LINE__, argument);
     abort();
 }
 
@@ -27,8 +37,9 @@ void function_somewhere_else(int argument) {
  * En pruebas unitarias debe ser mockeada.
  */
 bool database_id_exists(unsigned int id) {
-    fprintf(stderr, "ERROR: %s() was unexpectedly called with id: %u\n", 
-            __func__, id);
+    fprintf(stderr, 
+            "ERROR: %s() at %s:%d unexpectedly called with id: %u\n"
+            "       This function must be mocked in unit tests.\n", 
+            __func__, __FILE__, __LINE__, id);
     abort();
-    return false;
 }
